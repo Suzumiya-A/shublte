@@ -15,35 +15,112 @@
         h1 {
             color: #0067c0;
         }
+        #current_character {
+            color: rgb(42, 7, 62);
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
         p {
             font-size: 16px;
         }
         #tabcontrol a {
-   display: inline-block;
-   border-width: 1px 1px 1px 1px; 
-   border-style: solid;
-   border-color: black;
-   padding: 0.75em 1em;
-   text-decoration: none;
-   color: black;
-   background-color: white;
-   font-weight: bold;
-   position: relative;
-}
-#tabcontrol a:hover {
-   text-decoration: underline;  
-     }
+            display: inline-block;
+            border-width: 1px 1px 1px 1px; 
+            border-style: solid;
+            border-color: black;
+            padding: 0.75em 1em;
+            text-decoration: none;
+            color: black;
+            background-color: white;
+            font-weight: bold;
+            position: relative;
+        }
+        #tabcontrol a:hover {
+            text-decoration: underline;  
+        }
+        .character_record {
+            list-style: none;
+            margin: 5px 0;
+            border-radius: 35px;
+            font-size: 40px;
+            color: rgb(38, 49, 255);
+            padding: 10px 20px;
+            cursor: pointer;
+            position: relative;
+        }
+        .character_record:hover {
+            background-color: #e0e0e0;
+        }
+        .character_record:active {
+            background-color: #d0d0d0;
+        }
+
+        #create_character, #copy_button1, #copy_button2, .save_button {
+            background-color: #ceb849;
+            border: 1px solid #33333300;
+            border-radius: 35px;
+            font-size: 30px;
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+            position: relative;
+        }
+        #create_character:hover, #copy_button1:hover, #copy_button2:hover, .save_button:hover {
+            background-color: #B99b00;
+            border: 1px solid #333;
+        }
+        #create_character:active, #copy_button1:active, #copy_button2:active, .save_button:active {
+            background-color: #8a6f00;
+            border: 1px solid #333;
+        }
+        
+        .delete_button {
+            background-color: #b80000;
+            border: 1px solid #33333300;
+            border-radius: 35px;
+            font-size: 30px;
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+            position: relative;
+        }
+        .delete_button:hover {
+            background-color: #990000;
+            border: 1px solid #333;
+        }
+        .delete_button:active {
+            background-color: #660000;
+            border: 1px solid #333;
+        }
+
+       
     </style>
 
 </head>
 
 
 <body>
+
+
     <p id="tabcontrol">
+    <a href="#tabpage0">キャラ一覧</a>
     <a href="#tabpage1">代償者</a>
     <a href="#tabpage2">シュブルテ</a>
+    
 </p>
+    <h1 id="current_character"></h1>
+
+
+
 <div id="tabbody">
+    <div id="tabpage0">
+        <h2>キャラクターリスト</h2>
+        
+        <ul id="characters_list">
+            <button id="create_character">新規作成</button>
+        </ul>
+    </div>
+    
     <div id="tabpage1">
     <h1>代償者</h1>
     名前
@@ -465,15 +542,17 @@
     </tr>
     </table>
     <input type="button" id="button1" value="代償者ポイント　　">
-    <input type="text" id="Result1" style="width:7em;" readonly>
+    <input type="text" id="Result1" style="width:7em;" readonly><!-- point.d の垂直合計 -->
     <br>
     <input type="button" id="button2" value="シュブルテポイント">
-    <input type="text" id="Result2" style="width:7em;" readonly>
+    <input type="text" id="Result2" style="width:7em;" readonly><!-- point.s の垂直合計 -->
     <br>
     <input type="button" id="button3" value="合計ポイント　　　">
-    <input type="text" id="Result3" style="width:7em;" readonly>
+    <input type="text" id="Result3" style="width:7em;" readonly><!-- Res1,Res2 の合計 -->
     <br>
-    <button onclick="copyValue1()">コピー</button>
+    <button id="copy_button1">代償者をコピー</button>
+    <button class="save_button">新規保存</button>
+    <button class="delete_button">削除</button>
 </div>
 <div id="tabpage2">
 
@@ -488,30 +567,30 @@
     寄生歴
     <input type="text" id="Name24" style="width:7em;">
     好きな色
-    <input type="text" id="Name242" style="width:7em;">
-    生物
     <input type="text" id="Name25" style="width:7em;">
+    生物
+    <input type="text" id="Name26" style="width:7em;">
     <br>
     SK能力
-    <input type="text" id="Name26" style="width:7em;">
+    <input type="text" id="Name27" style="width:7em;">
     能力説明
-    <input type="text" id="Name27" size="40">
+    <input type="text" id="Name28" size="40">
     <br>
     HP
-    <input type="text" id="Name28" style="width:7em;">
-    SK
     <input type="text" id="Name29" style="width:7em;">
+    SK
+    <input type="text" id="Name210" style="width:7em;">
     乖離率
-    <input type="text" id="Name30" style="width:7em;" readonly>
+    <input type="text" id="Name211" style="width:7em;" readonly>
     筋力基礎値
-    <input type="text" id="Name31" style="width:7em;">
+    <input type="text" id="Name212" style="width:7em;">
     initiative
-    <input type="text" id="Name32" style="width:7em;" readonly>
+    <input type="text" id="Name213" style="width:7em;" readonly>
     <br>
     体格
-    <input type="text" id="Name33" style="width:7em;">
+    <input type="text" id="Name214" style="width:7em;">
     容姿
-    <input type="text" id="Name34" style="width:7em;">
+    <input type="text" id="Name215" style="width:7em;">
     <input type="button" id="dice2" value="dice">
     <br>
    〇探索系技能
@@ -932,13 +1011,17 @@
     <td><input type="text" id="Result6" style="width:7em;" readonly></td>
     </tr></table><br>
    
-    <button onclick="copyValue2()">コピー</button>
+    <button id="copy_button2">シュブルテをコピー</button>
+    <button class="save_button">新規保存</button>
+    <button class="delete_button">削除</button>
 </div>
 
-    <script src="script.js"></script>
+</div>
 
-    
-        
+
+
+
+    <script src="script.js"></script>
      </script>
      <script type="text/javascript">
         var tabs = document.getElementById('tabcontrol').getElementsByTagName('a');
@@ -963,7 +1046,6 @@
            tabs[i].onclick = changeTab;
         }
         tabs[0].onclick();
-        
         </script>
 </body>
 
