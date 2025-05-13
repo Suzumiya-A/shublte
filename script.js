@@ -782,5 +782,15 @@ const database = {
 
 }
 
+dice1.addEventListener("click", function(){
+    Name110.value = Number(Math.floor(Math.random()*10)+1);
+    Name111.value = Number(Math.floor(Math.random()*10)+1);
+})
+
+dice2.addEventListener("click", function(){
+    Name214.value = Number(Math.floor(Math.random()*10)+1);
+    Name215.value = Number(Math.floor(Math.random()*10)+1);
+})
+
 database.init();
 console.log(database.input_characters);
