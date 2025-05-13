@@ -150,6 +150,7 @@ class CharacterInterface {
         this.tables = new Tables();
         this.result_tables = new ResultTables();
         this.character_tabs = [document.querySelector("#tabpage1"), document.querySelector("#tabpage2")];
+        
 
         this.tables.forEach((table, table_name) => {
             if (table_name == "skn") {
@@ -161,6 +162,7 @@ class CharacterInterface {
                         this.result_tables.get("Result2").value = this.result_tables.get("Result5").value = this.tables.getVTotal("point")[1];
                         this.result_tables.get("Result3").value = this.result_tables.get("Result6").value = Number(this.result_tables.get("Result1").value) + Number(this.result_tables.get("Result2").value);
                     });
+                    row.get(key).dispatchEvent(new Event("input"));
                 });
             } else {
                 table.forEach((row, row_num) => {
@@ -181,10 +183,43 @@ class CharacterInterface {
                             this.result_tables.get("Result2").value = this.result_tables.get("Result5").value = this.tables.getVTotal("point")[1];
                             this.result_tables.get("Result3").value = this.result_tables.get("Result6").value = Number(this.result_tables.get("Result1").value) + Number(this.result_tables.get("Result2").value);
                         });
+                        row.d.get(key).dispatchEvent(new Event("input"));
+                        row.s.get(key).dispatchEvent(new Event("input"));
                     });
                 });
             }
         });
+
+        [this.dai_profile, this.shub_profile].forEach((profile) => {
+            profile.get("name").addEventListener("input", () => {
+                database.state.current_character_name = this.get_character_name();
+                if (database.input_characters[database.state.current_character_name]) {
+                    database.database_interface.save_button.forEach((button) => {
+                        button.innerText = "上書き保存";
+                    });
+                } else {
+                    database.database_interface.save_button.forEach((button) => {
+                        button.innerText = "新規保存";
+                    });
+                }
+            });
+
+            profile.get("dice").addEventListener("click", () => {
+                profile.get("taikaku").value = Number(Math.floor(Math.random()*10)+1);
+                profile.get("app").value = Number(Math.floor(Math.random()*10)+1);
+            });
+
+        });
+
+
+        this.character_tabs.forEach((tab) => {
+            tab.addEventListener("input", (e) => {
+                console.log("modified", e.target.id, e.target.value);
+                database.database_interface.current_character.innerText = database.state.current_character_name + " *";
+            }
+            );
+        });
+
     }
 
     display_character(input_character) {
@@ -308,27 +343,6 @@ const database = {
         current_character_name: null
     },
     init() {
-        [this.character_interface.dai_profile, this.character_interface.shub_profile].forEach((profile) => {
-            profile.get("name").addEventListener("input", () => {
-                this.state.current_character_name = this.character_interface.get_character_name();
-                if (this.input_characters[this.state.current_character_name]) {
-                    this.database_interface.save_button.forEach((button) => {
-                        button.innerText = "上書き保存";
-                    });
-                } else {
-                    this.database_interface.save_button.forEach((button) => {
-                        button.innerText = "新規保存";
-                    });
-                }
-            });
-        });
-        this.character_interface.character_tabs.forEach((tab) => {
-            tab.addEventListener("input", (e) => {
-                console.log("modified", e.target.id, e.target.value);
-                this.database_interface.current_character.innerText = this.state.current_character_name + " *";
-            }
-            );
-        });
         this.input_characters = JSON.parse(localStorage.getItem("input_characters") || "{}");
         console.log("input_characters", this.input_characters);
         try {
@@ -634,7 +648,7 @@ const database = {
         this.database_interface.current_character.innerText = this.state.current_character_name;
     },
     add_current_character() {
-        if (this.state.current_character_name) {
+        if (!this.input_characters[this.state.current_character_name]) {
             this.input_characters[this.state.current_character_name] = new InputCharacter(this.character_interface);
             const li = document.createElement("li");
             li.innerText = this.state.current_character_name;
