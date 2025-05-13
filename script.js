@@ -150,7 +150,8 @@ class CharacterInterface {
         this.tables = new Tables();
         this.result_tables = new ResultTables();
         this.character_tabs = [document.querySelector("#tabpage1"), document.querySelector("#tabpage2")];
-        
+        this.dai_memo = document.querySelector("#memo1");
+        this.shub_memo = document.querySelector("#memo2");
 
         this.tables.forEach((table, table_name) => {
             if (table_name == "skn") {
@@ -205,12 +206,11 @@ class CharacterInterface {
             });
 
             profile.get("dice").addEventListener("click", () => {
-                profile.get("taikaku").value = Number(Math.floor(Math.random()*10)+1);
-                profile.get("app").value = Number(Math.floor(Math.random()*10)+1);
+                profile.get("taikaku").value = Number(Math.floor(Math.random() * 10) + 1);
+                profile.get("app").value = Number(Math.floor(Math.random() * 10) + 1);
             });
 
         });
-
 
         this.character_tabs.forEach((tab) => {
             tab.addEventListener("input", (e) => {
@@ -218,6 +218,13 @@ class CharacterInterface {
                 database.database_interface.current_character.innerText = database.state.current_character_name + " *";
             }
             );
+        });
+
+        [this.dai_memo, this.shub_memo].forEach((memo) => {
+            memo.addEventListener("input", () => {
+                memo.style.height = "80px";
+                memo.style.height = memo.scrollHeight - 4 + 'px';
+            });
         });
 
     }
@@ -246,6 +253,8 @@ class CharacterInterface {
         this.tables.get("skn").getRow(1).get("name").value = input_character.skn_name;
         this.tables.get("tan").getRow(11).d.get("name").value = input_character.dai_tan11_name;
         this.tables.get("tan").getRow(11).s.get("name").value = input_character.shub_tan11_name;
+        this.dai_memo.value = input_character.dai_memo || "";
+        this.shub_memo.value = input_character.shub_memo || "";
     }
 
     get_character_name() {
@@ -277,17 +286,21 @@ class InputTables {
 class InputCharacter {
     constructor(character_interface) {
         this.dai_profile = {};
-        for (const [key, elm] of character_interface.dai_profile) {
-            this.dai_profile[key] = elm.value;
-        }
         this.shub_profile = {};
-        for (const [key, elm] of character_interface.shub_profile) {
-            this.shub_profile[key] = elm.value;
-        }
         this.input_tables = Object.assign({}, new InputTables(character_interface.tables));
         this.dai_tan11_name = character_interface.tables.get("tan").getRow(11).d.get("name").value;
         this.shub_tan11_name = character_interface.tables.get("tan").getRow(11).s.get("name").value;
         this.skn_name = character_interface.tables.get("skn").getRow(1).get("name").value;
+        console.log("dai_memo", character_interface.dai_memo.value);
+        this.dai_memo = character_interface.dai_memo.value;
+        this.shub_memo = character_interface.shub_memo.value;
+
+        for (const [key, elm] of character_interface.dai_profile) {
+            this.dai_profile[key] = elm.value;
+        }
+        for (const [key, elm] of character_interface.shub_profile) {
+            this.shub_profile[key] = elm.value;
+        }
     }
 }
 
@@ -301,6 +314,7 @@ class DatabaseInterface {
         this.save_button = document.querySelectorAll(".save_button");
         this.delete_button = document.querySelectorAll(".delete_button");
         this.current_character = document.querySelector("#current_character");
+
         this.character_list.addEventListener("click", (e) => {
             if (e.target.tagName == "LI") {
                 console.log("キャラクター選択", e.target.innerText);
@@ -327,7 +341,7 @@ class DatabaseInterface {
                 database.delete_character(character_name);
             });
         });
-        
+
 
     }
 
@@ -360,7 +374,7 @@ const database = {
             this.database_interface.save_button.forEach((button) => {
                 button.innerText = "上書き保存";
             });
-        }catch (e) {
+        } catch (e) {
             console.log("キャラクターが見つかりません");
             localStorage.clear();
             this.character_interface.display_character(new InputCharacter(this.character_interface));
@@ -648,12 +662,16 @@ const database = {
         this.database_interface.current_character.innerText = this.state.current_character_name;
     },
     add_current_character() {
-        if (!this.input_characters[this.state.current_character_name]) {
-            this.input_characters[this.state.current_character_name] = new InputCharacter(this.character_interface);
-            const li = document.createElement("li");
-            li.innerText = this.state.current_character_name;
-            li.setAttribute("class", "character_record");
-            this.database_interface.character_list.prepend(li);
+        if (this.state.current_character_name) {
+            if (!this.input_characters[this.state.current_character_name]) {
+                this.input_characters[this.state.current_character_name] = new InputCharacter(this.character_interface);
+                const li = document.createElement("li");
+                li.innerText = this.state.current_character_name;
+                li.setAttribute("class", "character_record");
+                this.database_interface.character_list.prepend(li);
+            } else {
+                this.input_characters[this.state.current_character_name] = new InputCharacter(this.character_interface);
+            }
         }
     },
     copy_character(type) {
@@ -796,15 +814,6 @@ const database = {
 
 }
 
-dice1.addEventListener("click", function(){
-    Name110.value = Number(Math.floor(Math.random()*10)+1);
-    Name111.value = Number(Math.floor(Math.random()*10)+1);
-})
-
-dice2.addEventListener("click", function(){
-    Name214.value = Number(Math.floor(Math.random()*10)+1);
-    Name215.value = Number(Math.floor(Math.random()*10)+1);
-})
 
 database.init();
 console.log(database.input_characters);
