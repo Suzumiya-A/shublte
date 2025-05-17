@@ -242,7 +242,7 @@ class CharacterInterface {
                 table.getRow(1).get("point").value = input_character.input_tables[table_name].point;
                 table.getRow(1).get("growth").value = input_character.input_tables[table_name].growth;
             } else {
-                for (let i = 1; i < table.length; i++) {
+                for (let i = 1; i <= table.length; i++) {
                     table.getRow(i).d.get("point").value = input_character.input_tables[table_name].point.d[i - 1];
                     table.getRow(i).d.get("growth").value = input_character.input_tables[table_name].growth.d[i - 1];
                     table.getRow(i).s.get("point").value = input_character.input_tables[table_name].point.s[i - 1];
@@ -251,8 +251,8 @@ class CharacterInterface {
             }
         });
         this.tables.get("skn").getRow(1).get("name").value = input_character.skn_name;
-        this.tables.get("tan").getRow(11).d.get("name").value = input_character.dai_tan11_name;
-        this.tables.get("tan").getRow(11).s.get("name").value = input_character.shub_tan11_name;
+        this.tables.get("tan").getRow(12).d.get("name").value = input_character.dai_tan12_name;
+        this.tables.get("tan").getRow(12).s.get("name").value = input_character.shub_tan12_name;
         this.dai_memo.value = input_character.dai_memo || "";
         this.shub_memo.value = input_character.shub_memo || "";
     }
@@ -272,7 +272,7 @@ class InputTables {
                 this[table_name].growth = table_elm.getRow(1).get("growth").value;
             } else {
                 this[table_name] = { point: { d: [], s: [] }, growth: { d: [], s: [] } };
-                for (let i = 1; i < table_elm.length; i++) {
+                for (let i = 1; i <= table_elm.length; i++) {
                     this[table_name].point.d.push(table_elm.getRow(i).d.get("point").value);
                     this[table_name].growth.d.push(table_elm.getRow(i).d.get("growth").value);
                     this[table_name].point.s.push(table_elm.getRow(i).s.get("point").value);
@@ -288,8 +288,8 @@ class InputCharacter {
         this.dai_profile = {};
         this.shub_profile = {};
         this.input_tables = Object.assign({}, new InputTables(character_interface.tables));
-        this.dai_tan11_name = character_interface.tables.get("tan").getRow(11).d.get("name").value;
-        this.shub_tan11_name = character_interface.tables.get("tan").getRow(11).s.get("name").value;
+        this.dai_tan12_name = character_interface.tables.get("tan").getRow(12).d.get("name").value;
+        this.shub_tan12_name = character_interface.tables.get("tan").getRow(12).s.get("name").value;
         this.skn_name = character_interface.tables.get("skn").getRow(1).get("name").value;
         console.log("dai_memo", character_interface.dai_memo.value);
         this.dai_memo = character_interface.dai_memo.value;
@@ -439,7 +439,8 @@ const database = {
                             "",
                             "",
                             "",
-                            ""
+                            "",
+                            "",
                         ],
                         "s": [
                             "",
@@ -452,7 +453,8 @@ const database = {
                             "",
                             "",
                             "",
-                            ""
+                            "",
+                            "",
                         ]
                     },
                     "growth": {
@@ -467,7 +469,8 @@ const database = {
                             "",
                             "",
                             "",
-                            ""
+                            "",
+                            "",
                         ],
                         "s": [
                             "",
@@ -480,7 +483,8 @@ const database = {
                             "",
                             "",
                             "",
-                            ""
+                            "",
+                            "",
                         ]
                     }
                 },
@@ -495,7 +499,8 @@ const database = {
                             "",
                             "",
                             "",
-                            ""
+                            "",
+                            "",
                         ],
                         "s": [
                             "",
@@ -506,7 +511,8 @@ const database = {
                             "",
                             "",
                             "",
-                            ""
+                            "",
+                            "",
                         ]
                     },
                     "growth": {
@@ -519,7 +525,8 @@ const database = {
                             "",
                             "",
                             "",
-                            ""
+                            "",
+                            "",
                         ],
                         "s": [
                             "",
@@ -530,7 +537,8 @@ const database = {
                             "",
                             "",
                             "",
-                            ""
+                            "",
+                            "",
                         ]
                     }
                 },
@@ -538,19 +546,23 @@ const database = {
                     "point": {
                         "d": [
                             "",
-                            ""
+                            "",
+                            "",
                         ],
                         "s": [
                             "",
-                            ""
+                            "",
+                            "",
                         ]
                     },
                     "growth": {
                         "d": [
                             "",
+                            "",
                             ""
                         ],
                         "s": [
+                            "",
                             "",
                             ""
                         ]
@@ -572,7 +584,8 @@ const database = {
                             "",
                             "",
                             "",
-                            ""
+                            "",
+                            "",
                         ],
                         "s": [
                             "",
@@ -588,7 +601,8 @@ const database = {
                             "",
                             "",
                             "",
-                            ""
+                            "",
+                            "",
                         ]
                     },
                     "growth": {
@@ -606,7 +620,8 @@ const database = {
                             "",
                             "",
                             "",
-                            ""
+                            "",
+                            "",
                         ],
                         "s": [
                             "",
@@ -622,7 +637,8 @@ const database = {
                             "",
                             "",
                             "",
-                            ""
+                            "",
+                            "",
                         ]
                     }
                 },
@@ -630,9 +646,11 @@ const database = {
                     "point": {
                         "d": [
                             "",
+                            "",
                             ""
                         ],
                         "s": [
+                            "",
                             "",
                             ""
                         ]
@@ -640,9 +658,11 @@ const database = {
                     "growth": {
                         "d": [
                             "",
+                            "",
                             ""
                         ],
                         "s": [
+                            "",
                             "",
                             ""
                         ]
@@ -653,8 +673,8 @@ const database = {
                     "growth": ""
                 }
             },
-            "dai_tan11_name": "痕跡(戦闘)",
-            "shub_tan11_name": "痕跡(戦闘)",
+            "dai_tan12_name": "痕跡(戦闘)",
+            "shub_tan12_name": "痕跡(戦闘)",
             "skn_name": "SK能力"
         });
 
@@ -817,3 +837,12 @@ const database = {
 
 database.init();
 console.log(database.input_characters);
+
+
+Name16.addEventListener("input", function(){
+    Name17.value = Number(Name16.value);
+})
+
+Name210.addEventListener("input", function(){
+    Name211.value = Number(Name210.value);
+})
