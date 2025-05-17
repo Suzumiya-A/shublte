@@ -163,7 +163,6 @@ class CharacterInterface {
                         this.result_tables.get("Result2").value = this.result_tables.get("Result5").value = this.tables.getVTotal("point")[1];
                         this.result_tables.get("Result3").value = this.result_tables.get("Result6").value = Number(this.result_tables.get("Result1").value) + Number(this.result_tables.get("Result2").value);
                     });
-                    row.get(key).dispatchEvent(new Event("input"));
                 });
             } else {
                 table.forEach((row, row_num) => {
@@ -184,7 +183,6 @@ class CharacterInterface {
                             this.result_tables.get("Result2").value = this.result_tables.get("Result5").value = this.tables.getVTotal("point")[1];
                             this.result_tables.get("Result3").value = this.result_tables.get("Result6").value = Number(this.result_tables.get("Result1").value) + Number(this.result_tables.get("Result2").value);
                         });
-                        row.d.get(key).dispatchEvent(new Event("input"));
                         row.s.get(key).dispatchEvent(new Event("input"));
                     });
                 });
@@ -239,14 +237,22 @@ class CharacterInterface {
         }
         this.tables.forEach((table, table_name) => {
             if (table_name == "skn") {
-                table.getRow(1).get("point").value = input_character.input_tables[table_name].point;
-                table.getRow(1).get("growth").value = input_character.input_tables[table_name].growth;
+                const row = table.getRow(1);
+                row.get("point").value = input_character.input_tables[table_name].point;
+                row.get("growth").value = input_character.input_tables[table_name].growth;
+                row.get("point").dispatchEvent(new Event("input"));
+                row.get("growth").dispatchEvent(new Event("input"));
             } else {
                 for (let i = 1; i <= table.length; i++) {
-                    table.getRow(i).d.get("point").value = input_character.input_tables[table_name].point.d[i - 1];
-                    table.getRow(i).d.get("growth").value = input_character.input_tables[table_name].growth.d[i - 1];
-                    table.getRow(i).s.get("point").value = input_character.input_tables[table_name].point.s[i - 1];
-                    table.getRow(i).s.get("growth").value = input_character.input_tables[table_name].growth.s[i - 1];
+                    const row = table.getRow(i);
+                    row.d.get("point").value = input_character.input_tables[table_name].point.d[i - 1];
+                    row.d.get("growth").value = input_character.input_tables[table_name].growth.d[i - 1];
+                    row.s.get("point").value = input_character.input_tables[table_name].point.s[i - 1];
+                    row.s.get("growth").value = input_character.input_tables[table_name].growth.s[i - 1];
+                    row.d.get("point").dispatchEvent(new Event("input"));
+                    row.d.get("growth").dispatchEvent(new Event("input"));
+                    row.s.get("point").dispatchEvent(new Event("input"));
+                    row.s.get("growth").dispatchEvent(new Event("input"));
                 }
             }
         });
@@ -673,8 +679,8 @@ const database = {
                     "growth": ""
                 }
             },
-            "dai_tan12_name": "痕跡(戦闘)",
-            "shub_tan12_name": "痕跡(戦闘)",
+            "dai_tan12_name": "痕跡()",
+            "shub_tan12_name": "痕跡()",
             "skn_name": "SK能力"
         });
 
