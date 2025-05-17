@@ -65,6 +65,15 @@ class Table extends Array {
     getRow(row_num) {
         return this[row_num - 1];
     }
+
+    getVMax(column_name) {
+        let [d_max, s_max] = [0, 0];
+        this.forEach((row) => {
+                    d_max = Math.max(d_max, Number(row.d.get(column_name).value));
+                    s_max = Math.max(s_max, Number(row.s.get(column_name).value));
+                });
+        return {d:d_max, s:s_max};
+    }
 }
 
 class Tables extends Map {
@@ -89,7 +98,7 @@ class Tables extends Map {
                 });
             }
         });
-        return [d_total, s_total];
+        return {d:d_total, s:s_total};
     }
 }
 
@@ -160,8 +169,31 @@ class CharacterInterface {
                     row.get(key).addEventListener("input", () => {
                         row.get("skill").value = Number(row.get("base").value) + Number(row.get("point").value) + Number(row.get("growth").value);
                         row.get("total").value = Number(row.get("skill").value) + Number(row.get("dai").value);
-                        this.result_tables.get("Result2").value = this.result_tables.get("Result5").value = this.tables.getVTotal("point")[1];
+                        this.result_tables.get("Result2").value = this.result_tables.get("Result5").value = this.tables.getVTotal("point").s;
                         this.result_tables.get("Result3").value = this.result_tables.get("Result6").value = Number(this.result_tables.get("Result1").value) + Number(this.result_tables.get("Result2").value);
+                    });
+                });
+            } else if (table_name == "sen") {
+                table.forEach((row, row_num) => {
+                    ["point", "growth"].forEach((key) => {
+                        row.d.get(key).addEventListener("input", () => {
+                            row.d.get("skill").value = Number(row.d.get("base").value) + Number(row.d.get("point").value) + Number(row.d.get("growth").value);
+                            row.d.get("total").value = Number(row.d.get("skill").value) + Number(row.d.get("shub").value);
+                            row.s.get("dai").value = Number(row.d.get("skill").value);
+                            row.s.get("total").value = Number(row.s.get("skill").value) + Number(row.s.get("dai").value);
+                            this.result_tables.get("Result1").value = this.result_tables.get("Result4").value = this.tables.getVTotal("point").d;
+                            this.result_tables.get("Result3").value = this.result_tables.get("Result6").value = Number(this.result_tables.get("Result1").value) + Number(this.result_tables.get("Result2").value);
+                            this.dai_profile.get("initiative").value = table.getVMax("skill").d;
+                        });
+                        row.s.get(key).addEventListener("input", () => {
+                            row.s.get("skill").value = Number(row.s.get("base").value) + Number(row.s.get("point").value) + Number(row.s.get("growth").value);
+                            row.s.get("total").value = Number(row.s.get("skill").value) + Number(row.s.get("dai").value);
+                            row.d.get("shub").value = Number(row.s.get("skill").value);
+                            row.d.get("total").value = Number(row.d.get("skill").value) + Number(row.d.get("shub").value);
+                            this.result_tables.get("Result2").value = this.result_tables.get("Result5").value = this.tables.getVTotal("point").s;
+                            this.result_tables.get("Result3").value = this.result_tables.get("Result6").value = Number(this.result_tables.get("Result1").value) + Number(this.result_tables.get("Result2").value);
+                            this.shub_profile.get("initiative").value = table.getVMax("skill").s
+                        });
                     });
                 });
             } else {
@@ -172,7 +204,7 @@ class CharacterInterface {
                             row.d.get("total").value = Number(row.d.get("skill").value) + Number(row.d.get("shub").value);
                             row.s.get("dai").value = Number(row.d.get("skill").value);
                             row.s.get("total").value = Number(row.s.get("skill").value) + Number(row.s.get("dai").value);
-                            this.result_tables.get("Result1").value = this.result_tables.get("Result4").value = this.tables.getVTotal("point")[0];
+                            this.result_tables.get("Result1").value = this.result_tables.get("Result4").value = this.tables.getVTotal("point").d;
                             this.result_tables.get("Result3").value = this.result_tables.get("Result6").value = Number(this.result_tables.get("Result1").value) + Number(this.result_tables.get("Result2").value);
                         });
                         row.s.get(key).addEventListener("input", () => {
@@ -180,10 +212,9 @@ class CharacterInterface {
                             row.s.get("total").value = Number(row.s.get("skill").value) + Number(row.s.get("dai").value);
                             row.d.get("shub").value = Number(row.s.get("skill").value);
                             row.d.get("total").value = Number(row.d.get("skill").value) + Number(row.d.get("shub").value);
-                            this.result_tables.get("Result2").value = this.result_tables.get("Result5").value = this.tables.getVTotal("point")[1];
+                            this.result_tables.get("Result2").value = this.result_tables.get("Result5").value = this.tables.getVTotal("point").s;
                             this.result_tables.get("Result3").value = this.result_tables.get("Result6").value = Number(this.result_tables.get("Result1").value) + Number(this.result_tables.get("Result2").value);
                         });
-                        row.s.get(key).dispatchEvent(new Event("input"));
                     });
                 });
             }
@@ -408,7 +439,7 @@ const database = {
                 "sk": "",
                 "decade_rate": "",
                 "kinryoku": "",
-                "initiative": "",
+                "initiative": "30",
                 "taikaku": "",
                 "app": "",
                 "dice": "dice"
@@ -426,7 +457,7 @@ const database = {
                 "sk": "",
                 "kairi_rate": "",
                 "kinryoku": "",
-                "initiative": "",
+                "initiative": "30",
                 "taikaku": "",
                 "app": "",
                 "dice": "dice"
@@ -788,7 +819,7 @@ const database = {
                 〇対人系技能 \n${get("tai").getRow(1).s.get("skill").value}-1d100>=0 【攪乱】 \n${get("tai").getRow(2).s.get("skill").value}-1d100>=0 【交渉】 \n${get("tai").getRow(3).s.get("skill").value}-1d100>=0 【恐喝】
                 〇知識系技能 \n${get("tis").getRow(1).s.get("skill").value}-1d100>=0 【シュブルテ言語】 \n${get("tis").getRow(2).s.get("skill").value}-1d100>=0 【料理】 \n${get("tis").getRow(3).s.get("skill").value}-1d100>=0 【スカミア学】 \n${get("tis").getRow(4).s.get("skill").value}-1d100>=0 【考古学】 \n${get("tis").getRow(5).s.get("skill").value}-1d100>=0 【戦闘知識】 \n${get("tis").getRow(6).s.get("skill").value}-1d100>=0 【解剖学】 \n${get("tis").getRow(7).s.get("skill").value}-1d100>=0 【他言語】 \n${get("tis").getRow(8).s.get("skill").value}-1d100>=0 【現代史】 \n${get("tis").getRow(9).s.get("skill").value}-1d100>=0 【科学】 \n${get("tis").getRow(10).s.get("skill").value}-1d100>=0 【天文学】 \n${get("tis").getRow(11).s.get("skill").value}-1d100>=0 【電子機器】 \n${get("tis").getRow(12).s.get("skill").value}-1d100>=0 【芸術】 \n${get("tis").getRow(13).s.get("skill").value}-1d100>=0 【加工術】 \n${get("tis").getRow(14).s.get("skill").value}-1d100>=0 【考案】 \n${get("tis").getRow(15).s.get("skill").value}-1d100>=0 【知識】
                 〇運技能 \n${get("unn").getRow(1).s.get("skill").value}-1d100>=0 【弱運】 \n${get("unn").getRow(2).s.get("skill").value}-1d100>=0 【運】 \n${get("unn").getRow(3).s.get("skill").value}-1d100>=0 【強運】
-                〇SK能力 \n${get("skn").getRow(1).get("skill").value}-1d100>=0 【SK能力】
+                〇SK能力 \n${get("skn").getRow(1).get("skill").value}-1d100>=0 【${get("skn").getRow(1).get("name").value}】
                 〇完全化 \n100-1d({乖離率}+{代償者})>=0 【完全化判定】\n{代償者}-1d({乖離率}+{代償者})>=0 【犠牲者決定】 \nC100-({乖離率}*3/4+{代償者}*1/4) 【期待値計算】`;
             }
         }
@@ -845,10 +876,10 @@ database.init();
 console.log(database.input_characters);
 
 
-Name16.addEventListener("input", function(){
+Name16.addEventListener("input", function () {
     Name17.value = Number(Name16.value);
 })
 
-Name210.addEventListener("input", function(){
+Name210.addEventListener("input", function () {
     Name211.value = Number(Name210.value);
 })
