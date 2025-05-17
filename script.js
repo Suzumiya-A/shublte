@@ -241,6 +241,14 @@ class CharacterInterface {
 
         });
 
+        this.dai_profile.get("sk").addEventListener("input", () => {
+            this.dai_profile.get("decade_rate").value = Number(this.dai_profile.get("sk").value);
+        });
+
+        this.shub_profile.get("sk").addEventListener("input", () => {
+            this.shub_profile.get("kairi_rate").value = Number(this.shub_profile.get("sk").value);
+        });
+
         this.character_tabs.forEach((tab) => {
             tab.addEventListener("input", (e) => {
                 console.log("modified", e.target.id, e.target.value);
@@ -874,12 +882,3 @@ const database = {
 
 database.init();
 console.log(database.input_characters);
-
-
-Name16.addEventListener("input", function () {
-    Name17.value = Number(Name16.value);
-})
-
-Name210.addEventListener("input", function () {
-    Name211.value = Number(Name210.value);
-})
