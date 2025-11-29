@@ -79,10 +79,10 @@ class Table extends Array {
 class Tables extends Map {
     constructor() {
         super();
-        this.set("tan", new Table("tan", 12, "pair"));
-        this.set("sen", new Table("sen", 10, "pair"));
+        this.set("tan", new Table("tan", 14, "pair"));
+        this.set("sen", new Table("sen", 9, "pair"));
         this.set("tai", new Table("tai", 3, "pair"));
-        this.set("tis", new Table("tis", 15, "pair"));
+        this.set("tis", new Table("tis", 14, "pair"));
         this.set("unn", new Table("unn", 3, "pair"));
         this.set("skn", new Table("skn", 1, "single", 2));
     }
@@ -296,8 +296,8 @@ class CharacterInterface {
             }
         });
         this.tables.get("skn").getRow(1).get("name").value = input_character.skn_name;
-        this.tables.get("tan").getRow(12).d.get("name").value = input_character.dai_tan12_name;
-        this.tables.get("tan").getRow(12).s.get("name").value = input_character.shub_tan12_name;
+        this.tables.get("tan").getRow(14).d.get("name").value = input_character.dai_tan14_name;
+        this.tables.get("tan").getRow(14).s.get("name").value = input_character.shub_tan14_name;
         this.dai_memo.value = input_character.dai_memo || "";
         this.shub_memo.value = input_character.shub_memo || "";
     }
@@ -333,8 +333,8 @@ class InputCharacter {
         this.dai_profile = {};
         this.shub_profile = {};
         this.input_tables = Object.assign({}, new InputTables(character_interface.tables));
-        this.dai_tan12_name = character_interface.tables.get("tan").getRow(12).d.get("name").value;
-        this.shub_tan12_name = character_interface.tables.get("tan").getRow(12).s.get("name").value;
+        this.dai_tan14_name = character_interface.tables.get("tan").getRow(14).d.get("name").value;
+        this.shub_tan14_name = character_interface.tables.get("tan").getRow(14).s.get("name").value;
         this.skn_name = character_interface.tables.get("skn").getRow(1).get("name").value;
         console.log("dai_memo", character_interface.dai_memo.value);
         this.dai_memo = character_interface.dai_memo.value;
@@ -486,8 +486,13 @@ const database = {
                             "",
                             "",
                             "",
+                            "",
+                            "",
+                            "",
                         ],
                         "s": [
+                            "",
+                            "",
                             "",
                             "",
                             "",
@@ -516,8 +521,12 @@ const database = {
                             "",
                             "",
                             "",
+                            "",
+                            "",
                         ],
                         "s": [
+                            "",
+                            "",
                             "",
                             "",
                             "",
@@ -718,8 +727,8 @@ const database = {
                     "growth": ""
                 }
             },
-            "dai_tan12_name": "痕跡()",
-            "shub_tan12_name": "痕跡()",
+            "dai_tan14_name": "痕跡(その他)",
+            "shub_tan14_name": "痕跡(その他)",
             "skn_name": "SK能力"
         });
 
@@ -778,10 +787,10 @@ const database = {
             }
             with (this.character_interface.tables) {
                 obj.data.commands = `100-{腐敗率}*3/4-{シュブルテ}*1/4-1d100>=0 【腐敗判定】 \n:シュブルテ=
-            〇探索系技能 \n${get("tan").getRow(1).d.get("skill").value}-1d100>=0 【知覚】\n${get("tan").getRow(2).d.get("skill").value}-1d100>=0 【観察】 \n${get("tan").getRow(3).d.get("skill").value}-1d100>=0 【人間観察】\n${get("tan").getRow(4).d.get("skill").value}-1d100>=0 【応急処置】 \n${get("tan").getRow(5).d.get("skill").value}-1d100>=0 【隠蔽】 \n${get("tan").getRow(6).d.get("skill").value}-1d100>=0 【潜伏】 \n${get("tan").getRow(7).d.get("skill").value}-1d100>=0 【検索】 \n${get("tan").getRow(8).d.get("skill").value}-1d100>=0 【体内時計】 \n${get("tan").getRow(9).d.get("skill").value}-1d100>=0 【結合】 \n${get("tan").getRow(10).d.get("skill").value}-1d100>=0 【痕跡(スカミア)】 \n${get("tan").getRow(11).d.get("skill").value}-1d100>=0 【痕跡(戦闘)】 \n${get("tan").getRow(12).d.get("skill").value}-1d100>=0 【その他の痕跡】
-            〇戦闘系技能 \n${get("sen").getRow(1).d.get("skill").value}-1d100>=0 【躱す】 \n${get("sen").getRow(2).d.get("skill").value}-1d100>=0 【見切り】 \n${get("sen").getRow(3).d.get("skill").value}-1d100>=0 【死んだふり】 \n${get("sen").getRow(4).d.get("skill").value}-1d100>=0 【体術】 \n${get("sen").getRow(5).d.get("skill").value}-1d100>=0 【投げつける】 \n${get("sen").getRow(6).d.get("skill").value}-1d100>=0 【締め落とし】 \n${get("sen").getRow(7).d.get("skill").value}-1d100>=0 【特攻】 \n${get("sen").getRow(8).d.get("skill").value}-1d100>=0 【銃火器】 \n${get("sen").getRow(9).d.get("skill").value}-1d100>=0 【刀】 \n${get("sen").getRow(10).d.get("skill").value}-1d100>=0 【スカミア銃】 \n{筋力基礎値}+{HP}-1d100>=0 【筋力】 \n{initiative}-1d100>=0 【速さ】
+            〇探索系技能 \n${get("tan").getRow(1).d.get("skill").value}-1d100>=0 【知覚】\n${get("tan").getRow(2).d.get("skill").value}-1d100>=0 【調査】 \n${get("tan").getRow(3).d.get("skill").value}-1d100>=0 【観察】\n${get("tan").getRow(4).d.get("skill").value}-1d100>=0 【人間観察】 \n${get("tan").getRow(5).d.get("skill").value}-1d100>=0 【応急処置】 \n${get("tan").getRow(6).d.get("skill").value}-1d100>=0 【隠蔽】 \n${get("tan").getRow(7).d.get("skill").value}-1d100>=0 【潜伏】 \n${get("tan").getRow(8).d.get("skill").value}-1d100>=0 【検索】 \n${get("tan").getRow(9).d.get("skill").value}-1d100>=0 【体内時計】 \n${get("tan").getRow(10).d.get("skill").value}-1d100>=0 【運転】 \n${get("tan").getRow(11).d.get("skill").value}-1d100>=0 【結合】 \n${get("tan").getRow(12).d.get("skill").value}-1d100>=0 【痕跡(スカミア)】 \n${get("tan").getRow(13).d.get("skill").value}-1d100>=0 【痕跡(戦闘)】 \n${get("tan").getRow(14).d.get("skill").value}-1d100>=0 【痕跡(その他)】
+            〇戦闘系技能 \n${get("sen").getRow(1).d.get("skill").value}-1d100>=0 【躱す】 \n${get("sen").getRow(2).d.get("skill").value}-1d100>=0 【見切り】 \n${get("sen").getRow(3).d.get("skill").value}-1d100>=0 【死んだふり】 \n${get("sen").getRow(4).d.get("skill").value}-1d100>=0 【体術】 \n${get("sen").getRow(5).d.get("skill").value}-1d100>=0 【投げつける】 \n${get("sen").getRow(6).d.get("skill").value}-1d100>=0 【締め落とし】 \n${get("sen").getRow(7).d.get("skill").value}-1d100>=0 【特攻】 \n${get("sen").getRow(8).d.get("skill").value}-1d100>=0 【銃火器】 \n${get("sen").getRow(9).d.get("skill").value}-1d100>=0 【刀】 \n{筋力基礎値}+{HP}-1d100>=0 【筋力】 \n{initiative}-1d100>=0 【速さ】
             〇対人系技能 \n${get("tai").getRow(1).d.get("skill").value}-1d100>=0 【攪乱】 \n${get("tai").getRow(2).d.get("skill").value}-1d100>=0 【交渉】 \n${get("tai").getRow(3).d.get("skill").value}-1d100>=0 【恐喝】
-            〇知識系技能 \n${get("tis").getRow(1).d.get("skill").value}-1d100>=0 【シュブルテ言語】 \n${get("tis").getRow(2).d.get("skill").value}-1d100>=0 【料理】 \n${get("tis").getRow(3).d.get("skill").value}-1d100>=0 【スカミア学】 \n${get("tis").getRow(4).d.get("skill").value}-1d100>=0 【考古学】 \n${get("tis").getRow(5).d.get("skill").value}-1d100>=0 【戦闘知識】 \n${get("tis").getRow(6).d.get("skill").value}-1d100>=0 【解剖学】 \n${get("tis").getRow(7).d.get("skill").value}-1d100>=0 【他言語】 \n${get("tis").getRow(8).d.get("skill").value}-1d100>=0 【現代史】 \n${get("tis").getRow(9).d.get("skill").value}-1d100>=0 【科学】 \n${get("tis").getRow(10).d.get("skill").value}-1d100>=0 【天文学】 \n${get("tis").getRow(11).d.get("skill").value}-1d100>=0 【電子機器】 \n${get("tis").getRow(12).d.get("skill").value}-1d100>=0 【芸術】 \n${get("tis").getRow(13).d.get("skill").value}-1d100>=0 【加工術】 \n${get("tis").getRow(14).d.get("skill").value}-1d100>=0 【考案】 \n${get("tis").getRow(15).d.get("skill").value}-1d100>=0 【知識】
+            〇知識系技能 \n${get("tis").getRow(1).d.get("skill").value}-1d100>=0 【料理】 \n${get("tis").getRow(2).d.get("skill").value}-1d100>=0 【スカミア学】 \n${get("tis").getRow(3).d.get("skill").value}-1d100>=0 【考古学】 \n${get("tis").getRow(4).d.get("skill").value}-1d100>=0 【戦闘知識】 \n${get("tis").getRow(5).d.get("skill").value}-1d100>=0 【解剖学】 \n${get("tis").getRow(6).d.get("skill").value}-1d100>=0 【他言語】 \n${get("tis").getRow(7).d.get("skill").value}-1d100>=0 【現代史】 \n${get("tis").getRow(8).d.get("skill").value}-1d100>=0 【科学】 \n${get("tis").getRow(9).d.get("skill").value}-1d100>=0 【天文学】 \n${get("tis").getRow(10).d.get("skill").value}-1d100>=0 【電子機器】 \n${get("tis").getRow(11).d.get("skill").value}-1d100>=0 【芸術】 \n${get("tis").getRow(12).d.get("skill").value}-1d100>=0 【加工術】 \n${get("tis").getRow(13).d.get("skill").value}-1d100>=0 【考案】 \n${get("tis").getRow(14).d.get("skill").value}-1d100>=0 【知識】
             〇運技能 \n${get("unn").getRow(1).d.get("skill").value}-1d100>=0 【弱運】 \n${get("unn").getRow(2).d.get("skill").value}-1d100>=0 【運】 \n${get("unn").getRow(3).d.get("skill").value}-1d100>=0 【強運】
             〇完全化 \n100-1d({腐敗率}+{シュブルテ})>=0 【完全化判定】\n{シュブルテ}-1d({腐敗率}+{シュブルテ})>=0 【犠牲者決定】 \nC100-({腐敗率}*3/4+{シュブルテ}*1/4) 【期待値計算】`;
             }
@@ -822,10 +831,10 @@ const database = {
             }
             with (this.character_interface.tables) {
                 obj.data.commands = `100-{乖離率}*3/4-{代償者}*1/4-1d100>=0 【乖離判定】 \n:代償者=
-                〇探索系技能 \n${get("tan").getRow(1).s.get("skill").value}-1d100>=0 【知覚】\n${get("tan").getRow(2).s.get("skill").value}-1d100>=0 【観察】 \n${get("tan").getRow(3).s.get("skill").value}-1d100>=0 【人間観察】\n${get("tan").getRow(4).s.get("skill").value}-1d100>=0 【応急処置】 \n${get("tan").getRow(5).s.get("skill").value}-1d100>=0 【隠蔽】 \n${get("tan").getRow(6).s.get("skill").value}-1d100>=0 【潜伏】 \n${get("tan").getRow(7).s.get("skill").value}-1d100>=0 【検索】 \n${get("tan").getRow(8).s.get("skill").value}-1d100>=0 【体内時計】 \n${get("tan").getRow(9).s.get("skill").value}-1d100>=0 【結合】 \n${get("tan").getRow(10).s.get("skill").value}-1d100>=0 【痕跡(スカミア)】 \n${get("tan").getRow(11).s.get("skill").value}-1d100>=0 【痕跡(戦闘)】 \n${get("tan").getRow(12).s.get("skill").value}-1d100>=0 【その他の痕跡】
-                〇戦闘系技能 \n${get("sen").getRow(1).s.get("skill").value}-1d100>=0 【躱す】 \n${get("sen").getRow(2).s.get("skill").value}-1d100>=0 【見切り】 \n${get("sen").getRow(3).s.get("skill").value}-1d100>=0 【死んだふり】 \n${get("sen").getRow(4).s.get("skill").value}-1d100>=0 【体術】 \n${get("sen").getRow(5).s.get("skill").value}-1d100>=0 【投げつける】 \n${get("sen").getRow(6).s.get("skill").value}-1d100>=0 【締め落とし】 \n${get("sen").getRow(7).s.get("skill").value}-1d100>=0 【特攻】 \n${get("sen").getRow(8).s.get("skill").value}-1d100>=0 【銃火器】 \n${get("sen").getRow(9).s.get("skill").value}-1d100>=0 【刀】 \n${get("sen").getRow(10).s.get("skill").value}-1d100>=0 【スカミア銃】 \n{筋力基礎値}+{HP}-1d100>=0 【筋力】 \n{initiative}-1d100>=0 【速さ】
+                〇探索系技能 \n${get("tan").getRow(1).s.get("skill").value}-1d100>=0 【知覚】\n${get("tan").getRow(2).s.get("skill").value}-1d100>=0 【調査】 \n${get("tan").getRow(3).s.get("skill").value}-1d100>=0 【観察】\n${get("tan").getRow(4).s.get("skill").value}-1d100>=0 【人間観察】 \n${get("tan").getRow(5).s.get("skill").value}-1d100>=0 【応急処置】 \n${get("tan").getRow(6).s.get("skill").value}-1d100>=0 【隠蔽】 \n${get("tan").getRow(7).s.get("skill").value}-1d100>=0 【潜伏】 \n${get("tan").getRow(8).s.get("skill").value}-1d100>=0 【検索】 \n${get("tan").getRow(9).s.get("skill").value}-1d100>=0 【体内時計】 \n${get("tan").getRow(10).s.get("skill").value}-1d100>=0 【運転】 \n${get("tan").getRow(11).s.get("skill").value}-1d100>=0 【結合】 \n${get("tan").getRow(12).s.get("skill").value}-1d100>=0 【痕跡(スカミア)】 \n${get("tan").getRow(13).s.get("skill").value}-1d100>=0 【痕跡(戦闘)】 \n${get("tan").getRow(12).s.get("skill").value}-1d100>=0 【痕跡(その他)】
+                〇戦闘系技能 \n${get("sen").getRow(1).s.get("skill").value}-1d100>=0 【躱す】 \n${get("sen").getRow(2).s.get("skill").value}-1d100>=0 【見切り】 \n${get("sen").getRow(3).s.get("skill").value}-1d100>=0 【死んだふり】 \n${get("sen").getRow(4).s.get("skill").value}-1d100>=0 【体術】 \n${get("sen").getRow(5).s.get("skill").value}-1d100>=0 【投げつける】 \n${get("sen").getRow(6).s.get("skill").value}-1d100>=0 【締め落とし】 \n${get("sen").getRow(7).s.get("skill").value}-1d100>=0 【特攻】 \n${get("sen").getRow(8).s.get("skill").value}-1d100>=0 【銃火器】 \n${get("sen").getRow(9).s.get("skill").value}-1d100>=0 【刀】 \n{筋力基礎値}+{HP}-1d100>=0 【筋力】 \n{initiative}-1d100>=0 【速さ】
                 〇対人系技能 \n${get("tai").getRow(1).s.get("skill").value}-1d100>=0 【攪乱】 \n${get("tai").getRow(2).s.get("skill").value}-1d100>=0 【交渉】 \n${get("tai").getRow(3).s.get("skill").value}-1d100>=0 【恐喝】
-                〇知識系技能 \n${get("tis").getRow(1).s.get("skill").value}-1d100>=0 【シュブルテ言語】 \n${get("tis").getRow(2).s.get("skill").value}-1d100>=0 【料理】 \n${get("tis").getRow(3).s.get("skill").value}-1d100>=0 【スカミア学】 \n${get("tis").getRow(4).s.get("skill").value}-1d100>=0 【考古学】 \n${get("tis").getRow(5).s.get("skill").value}-1d100>=0 【戦闘知識】 \n${get("tis").getRow(6).s.get("skill").value}-1d100>=0 【解剖学】 \n${get("tis").getRow(7).s.get("skill").value}-1d100>=0 【他言語】 \n${get("tis").getRow(8).s.get("skill").value}-1d100>=0 【現代史】 \n${get("tis").getRow(9).s.get("skill").value}-1d100>=0 【科学】 \n${get("tis").getRow(10).s.get("skill").value}-1d100>=0 【天文学】 \n${get("tis").getRow(11).s.get("skill").value}-1d100>=0 【電子機器】 \n${get("tis").getRow(12).s.get("skill").value}-1d100>=0 【芸術】 \n${get("tis").getRow(13).s.get("skill").value}-1d100>=0 【加工術】 \n${get("tis").getRow(14).s.get("skill").value}-1d100>=0 【考案】 \n${get("tis").getRow(15).s.get("skill").value}-1d100>=0 【知識】
+                〇知識系技能 \n${get("tis").getRow(1).s.get("skill").value}-1d100>=0 【料理】 \n${get("tis").getRow(2).s.get("skill").value}-1d100>=0 【スカミア学】 \n${get("tis").getRow(3).s.get("skill").value}-1d100>=0 【考古学】 \n${get("tis").getRow(4).s.get("skill").value}-1d100>=0 【戦闘知識】 \n${get("tis").getRow(5).s.get("skill").value}-1d100>=0 【解剖学】 \n${get("tis").getRow(6).s.get("skill").value}-1d100>=0 【他言語】 \n${get("tis").getRow(7).s.get("skill").value}-1d100>=0 【現代史】 \n${get("tis").getRow(8).s.get("skill").value}-1d100>=0 【科学】 \n${get("tis").getRow(9).s.get("skill").value}-1d100>=0 【天文学】 \n${get("tis").getRow(10).s.get("skill").value}-1d100>=0 【電子機器】 \n${get("tis").getRow(11).s.get("skill").value}-1d100>=0 【芸術】 \n${get("tis").getRow(12).s.get("skill").value}-1d100>=0 【加工術】 \n${get("tis").getRow(13).s.get("skill").value}-1d100>=0 【考案】 \n${get("tis").getRow(14).s.get("skill").value}-1d100>=0 【知識】
                 〇運技能 \n${get("unn").getRow(1).s.get("skill").value}-1d100>=0 【弱運】 \n${get("unn").getRow(2).s.get("skill").value}-1d100>=0 【運】 \n${get("unn").getRow(3).s.get("skill").value}-1d100>=0 【強運】
                 〇SK能力 \n${get("skn").getRow(1).get("skill").value}-1d100>=0 【${get("skn").getRow(1).get("name").value}】
                 〇完全化 \n100-1d({乖離率}+{代償者})>=0 【完全化判定】\n{代償者}-1d({乖離率}+{代償者})>=0 【犠牲者決定】 \nC100-({乖離率}*3/4+{代償者}*1/4) 【期待値計算】`;
